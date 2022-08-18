@@ -10,6 +10,7 @@ using FastFood.Services.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace FastFood.Services
 {
@@ -37,14 +38,12 @@ namespace FastFood.Services
             await context.SaveChangesAsync();
         }
 
-        //Can be configured to async (.ToArrayAsync) with .net 6.
-        //Need to change the interface as well.
-        public ICollection<ListCategoryDTO> GetAll()
+        public async Task <ICollection<ListCategoryDTO>> GetAll()
         {
-            return this.context
+            return await this.context
                 .Categories
                 .ProjectTo<ListCategoryDTO>(this.mapper.ConfigurationProvider)
-                .ToArray();
+                .ToArrayAsync();
         }
     }
 }

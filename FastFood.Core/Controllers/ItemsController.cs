@@ -25,7 +25,7 @@
            
         }
 
-        //Create class to async when upgrading .net to 6. Error CS1061 on current 3.1.3 TODO
+       
         public async Task<IActionResult> Create()
         {
                 ICollection<ListCategoryDTO> categories = await this.category
