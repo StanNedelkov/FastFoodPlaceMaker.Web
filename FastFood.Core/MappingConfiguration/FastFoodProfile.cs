@@ -7,6 +7,7 @@
     using FastFood.Services.Models;
     using FastFood.Services.Models.Categories;
     using FastFood.Services.Models.Items;
+    using FastFood.Services.Models.Orders;
     using ViewModels.Positions;
 
     public class FastFoodProfile : Profile
@@ -36,6 +37,9 @@
             this.CreateMap<Item, ListItemDTO>()
                 .ForMember(x => x.Category, y => y.MapFrom(x => x.Category.Name));
             this.CreateMap<ListItemDTO, ItemsAllViewModels>();
+
+            //Orders
+            this.CreateMap<CreateOrderDTO, Order>();
 
         }
     }

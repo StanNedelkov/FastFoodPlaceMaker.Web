@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+
 using FastFood.Data;
 using FastFood.Models;
 using FastFood.Services.Models.Items;
 using FastFood.Services.Services;
+
 using Microsoft.EntityFrameworkCore;
-using System;
+
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FastFood.Services
@@ -29,9 +30,9 @@ namespace FastFood.Services
             await this.context.SaveChangesAsync();
         }
 
-        public Task<bool> containsItem(string itemName)
+        public async Task<bool> containsItem(string itemName)
         {
-            return this.context
+            return await this.context
                 .Items
                 .AnyAsync(x => x.Name == itemName);
         }
