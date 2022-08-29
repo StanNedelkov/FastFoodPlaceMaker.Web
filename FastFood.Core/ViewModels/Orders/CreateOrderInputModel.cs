@@ -9,5 +9,7 @@
         public int EmployeeId { get; set; }
 
         public int Quantity { get; set; }
+
+       
     }
 }

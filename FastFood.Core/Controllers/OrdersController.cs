@@ -1,9 +1,13 @@
 ﻿namespace FastFood.Core.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using AutoMapper;
     using Data;
+    using FastFood.Services.Models.Orders;
+    using FastFood.Services.Services;
     using Microsoft.AspNetCore.Mvc;
     using ViewModels.Orders;
 
@@ -11,11 +15,12 @@
     {
         private readonly FastFoodContext context;
         private readonly IMapper mapper;
-
-        public OrdersController(FastFoodContext context, IMapper mapper)
+        private readonly IOrderService service;
+        public OrdersController(FastFoodContext context, IMapper mapper, IOrderService service)
         {
             this.context = context;
             this.mapper = mapper;
+            this.service = service;
         }
 
         public IActionResult Create()
@@ -35,9 +40,15 @@
             return this.RedirectToAction("All", "Orders");
         }
 
-        public IActionResult All()
+        public async Task<IActionResult> All()
         {
-            throw new NotImplementedException();
+            ICollection<ListOrderDTO> orderDTOs = await this.service.GetAll();
+            IList<OrderAllViewModel> all = new List<OrderAllViewModel>();
+            foreach (var dto in orderDTOs)
+            {
+                all.Add(this.mapper.Map<OrderAllViewModel>(dto));
+            }
+           return this.View(all);
         }
     }
 }

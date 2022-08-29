@@ -6,12 +6,16 @@ namespace FastFood.Services.Models.Orders
 {
     public class ListOrderDTO
     {
+        /*public int OrderId { get; set; }
+
         public string Customer { get; set; }
 
-        public int ItemId { get; set; }
+        public string Employee { get; set; }
 
-        public int EmployeeId { get; set; }
+        public string DateTime { get; set; }*/
 
-        public int Quantity { get; set; }
+         public List<int> Items { get; set; }
+
+         public List<int> Employees { get; set; }
     }
 }

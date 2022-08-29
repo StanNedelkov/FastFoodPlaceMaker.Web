@@ -1,5 +1,10 @@
-﻿using FastFood.Services.Models.Orders;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using FastFood.Data;
+using FastFood.Models;
+using FastFood.Services.Models.Orders;
 using FastFood.Services.Services;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,14 +14,31 @@ namespace FastFood.Services
 {
     public class OrderService : IOrderService
     {
-        public Task AddOrder(CreateOrderDTO dto)
+        private readonly IMapper mapper;
+        private readonly FastFoodContext context;
+
+        public OrderService(IMapper mapper, FastFoodContext context)
         {
-            throw new NotImplementedException();
+            this.mapper = mapper;
+            this.context = context;
+        }
+        public async Task AddOrder(CreateOrderDTO dto)
+        {
+            Order order = this.mapper.Map<Order>(dto);
+            await this.context.AddAsync(order);
+            await this.context.SaveChangesAsync();
+           
         }
 
-        public Task<ICollection<ListOrderDTO>> GetAll()
+        public async Task<ICollection<ListOrderDTO>> GetAll()
         {
-            throw new NotImplementedException();
+
+            ICollection<ListOrderDTO> list = await this.context
+                .Orders
+                .ProjectTo<ListOrderDTO>(this.mapper.ConfigurationProvider)
+                .ToArrayAsync();
+            return list;
+
         }
     }
 }

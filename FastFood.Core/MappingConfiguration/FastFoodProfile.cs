@@ -3,6 +3,7 @@
     using AutoMapper;
     using FastFood.Core.ViewModels.Categories;
     using FastFood.Core.ViewModels.Items;
+    using FastFood.Core.ViewModels.Orders;
     using FastFood.Models;
     using FastFood.Services.Models;
     using FastFood.Services.Models.Categories;
@@ -39,8 +40,10 @@
             this.CreateMap<ListItemDTO, ItemsAllViewModels>();
 
             //Orders
-            this.CreateMap<CreateOrderDTO, Order>();
-
+            this.CreateMap<CreateOrderInputModel, CreateOrderDTO>();
+            this.CreateMap<CreateOrderDTO,Order>();
+            this.CreateMap<ListOrderDTO,CreateOrderViewModel>();
+                
         }
     }
 }
